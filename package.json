@@ -1,0 +1,45 @@
+{
+  "name": "@thewhodidthis/wobble",
+  "version": "0.0.0",
+  "description": "Slit scan thing",
+  "main": "index.js",
+  "module": "index.es",
+  "homepage": "https://github.com/thewhodidthis/wobble#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thewhodidthis/wobble.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thewhodidthis/wobble/issues"
+  },
+  "scripts": {
+    "pretest": "eslint test.js",
+    "test": "node test",
+    "prestart": "eslint index.es",
+    "start": "rollup -f cjs index.es > index.js",
+    "preexample": "eslint example/index.es",
+    "example": "cd example; rollup -f iife index.es | buble > index.js",
+    "postexample": "open example/index.html"
+  },
+  "eslintConfig": {
+    "extends": "@thewhodidthis"
+  },
+  "engines": {
+    "node": ">=6.4.0",
+    "npm": ">=3.11.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@thewhodidthis/eslint-config": "latest",
+    "buble": "latest",
+    "eslint": "latest",
+    "rollup": "latest",
+    "tapeless": "latest"
+  },
+  "keywords": [
+    "slit-scan",
+    "canvas"
+  ],
+  "author": "sChzs BkgNns <sotirios.bakagiannis@gmail.com> (https://www.thewhodidthis.com)",
+  "license": "Unlicense"
+}
