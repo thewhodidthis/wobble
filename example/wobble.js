@@ -12,10 +12,6 @@ var wobble = function (fold) {
     var w = ref.width;
     var data = ref.data;
 
-    var pixels = w * h * 4;
-    var lookup = new Uint8ClampedArray(pixels);
-    var result = new ImageData(lookup, w, h);
-
     var length = supply.push(data);
     var excess = length - fold;
 
@@ -23,17 +19,20 @@ var wobble = function (fold) {
       supply.splice(0, excess);
     }
 
-    var size = Math.floor(h / supply.length);
+    var pixels = w * h * 4;
+    var spread = Math.floor(h / supply.length);
 
-    for (var i = 0; i < supply.length; i += 1) {
-      var from = supply[i];
+    var lookup = new Uint8ClampedArray(pixels);
+    var result = new ImageData(lookup, w, h);
 
-      var stop = 4 * size * i * w;
-      var till = Math.max(stop * 2, pixels);
+    for (var i = 0, total = supply.length; i < total; i += 1) {
+      var begin = 4 * spread * i * w;
+      var until = Math.max(begin * 2, pixels);
 
-      var clip = from.subarray(stop, till);
+      var frame = supply[i];
+      var chunk = frame.subarray(begin, until);
 
-      lookup.set(clip, stop);
+      lookup.set(chunk, begin);
     }
 
     return result
