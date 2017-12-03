@@ -1,0 +1,114 @@
+html {
+  font: 16px/1.25 arial, sans-serif;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+  overflow: hidden;
+  padding: 0.5rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+small {
+  font-size: 0.75rem;
+}
+
+p {
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+figure {
+  left: 50%;
+  margin: -180px 0 0 -320px;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+}
+
+figcaption {
+  margin: 0.5rem 0 0;
+}
+
+canvas,
+img {
+  display: block;
+}
+
+canvas {
+  background: #000;
+}
+
+video {
+  display: none;
+}
+
+.button {
+  display: block;
+  position: relative;
+}
+
+.button::before,
+.button::after {
+  box-sizing: border-box;
+  content: "";
+  display: block;
+  height: 0;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+}
+
+.button::before {
+  border: 1.5em solid transparent;
+  border-left-color: rgba(255, 255, 255, 0.7);
+  border-left-width: 2.5em;
+  margin-left: 0.75rem;
+}
+
+.button::after {
+  border: 0;
+}
+
+.button:hover {
+  text-decoration: none;
+}
+
+.is-playing .button::before,
+.is-playing .button::after {
+  background: rgba(255, 255, 255, 0.7);
+  border: 0;
+}
+
+.is-playing .button::before {
+  margin-left: -0.75em;
+}
+
+.is-playing .button::after {
+  margin-left: 0.75em;
+}
+
+.is-playing .button:hover::before,
+.is-playing .button:hover::after {
+  height: 3em;
+  width: 1em;
+}
+
+.is-iframe {
+  overflow: hidden;
+}
+
+.is-iframe figcaption {
+  display: none;
+}
