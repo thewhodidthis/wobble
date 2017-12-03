@@ -14,12 +14,12 @@
   },
   "scripts": {
     "pretest": "eslint test.js",
-    "test": "node test",
+    "test": "rollup -c node:x -f iife test.js | kpow",
     "prestart": "eslint index.es",
     "start": "rollup -f cjs index.es > index.js",
+    "poststart": "rollup -f iife -n wobble index.es | buble > example/wobble.js",
     "preexample": "eslint example/index.es",
-    "example": "cd example; rollup -f iife index.es | buble > index.js",
-    "postexample": "open example/index.html"
+    "example": "cd example; rollup -f iife index.es | buble > index.js"
   },
   "eslintConfig": {
     "extends": "@thewhodidthis"
@@ -32,8 +32,11 @@
   "devDependencies": {
     "@thewhodidthis/eslint-config": "latest",
     "buble": "latest",
+    "cutaway": "latest",
     "eslint": "latest",
+    "kpow": "latest",
     "rollup": "latest",
+    "rollup-config-x": "latest",
     "tapeless": "latest"
   },
   "keywords": [
