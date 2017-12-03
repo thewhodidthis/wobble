@@ -1,8 +1,8 @@
 var wobble = (function () {
 'use strict';
 
-var wobble = function (fold) {
-  if ( fold === void 0 ) fold = 40;
+var wobble = function (cuts) {
+  if ( cuts === void 0 ) cuts = 40;
 
   var supply = [];
 
@@ -12,21 +12,22 @@ var wobble = function (fold) {
     var w = ref.width;
     var data = ref.data;
 
-    var length = supply.push(data);
-    var excess = length - fold;
+    var frames = supply.push(data);
+    var excess = frames - cuts;
 
     if (excess) {
       supply.splice(0, excess);
     }
 
-    var pixels = w * h * 4;
-    var spread = Math.floor(h / supply.length);
+    var pixels = 4 * w * h;
+    var slices = supply.length;
+    var spread = Math.floor(pixels / slices);
 
     var lookup = new Uint8ClampedArray(pixels);
     var result = new ImageData(lookup, w, h);
 
-    for (var i = 0, total = supply.length; i < total; i += 1) {
-      var begin = 4 * spread * i * w;
+    for (var i = 0; i < slices; i += 1) {
+      var begin = i * spread;
       var until = Math.max(begin * 2, pixels);
 
       var frame = supply[i];
