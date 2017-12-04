@@ -45,7 +45,7 @@ img {
 }
 
 canvas {
-  background: #000 url('screenshot.png') no-repeat;
+  background: #000;
 }
 
 video {
