@@ -15,6 +15,7 @@ var revert = function () {
     camera.setAttribute(v, v);
   });
 
+  camera.setAttribute('poster', 'poster.png');
   camera.setAttribute('preload', 'auto');
   camera.setAttribute('src', 'BigBuckBunny.mp4');
 
@@ -37,7 +38,7 @@ var h = canvas.height;
 var screen = { x: 0, y: 0, w: w, h: h };
 
 // Extract dimensions
-camera.addEventListener('loadedmetadata', function (ref) {
+camera.addEventListener('loadeddata', function (ref) {
   var target = ref.target;
 
   var sw = target.videoWidth;

@@ -33,7 +33,7 @@ const { width: w, height: h } = canvas
 const screen = { x: 0, y: 0, w, h }
 
 // Extract dimensions
-camera.addEventListener('loadedmetadata', ({ target }) => {
+camera.addEventListener('loadeddata', ({ target }) => {
   const { videoWidth: sw, videoHeight: sh } = target
 
   const dx = sw - w
