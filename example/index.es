@@ -6,18 +6,47 @@ const canvas = document.querySelector('canvas')
 const master = canvas.getContext('2d')
 const camera = document.createElement('video')
 
-'playsinline loop muted'.split(' ').forEach((v) => {
-  camera.setAttribute(v, true)
-})
+// In case webcam stream not accessible
+const revert = () => {
+  'playsinline loop muted'.split(' ').forEach((v) => {
+    camera.setAttribute(v, v)
+  })
 
+  camera.setAttribute('preload', 'auto')
+  camera.setAttribute('src', 'BigBuckBunny.mp4')
+
+  canvas.parentNode.insertBefore(camera, canvas)
+}
+
+if (navigator.mediaDevices) {
+  navigator.mediaDevices.getUserMedia({
+    video: { width: 640 },
+    audio: false
+  }).then((stream) => {
+    camera.srcObject = stream
+  }).catch(revert)
+} else {
+  revert()
+}
+
+const { width: w, height: h } = canvas
+const screen = { x: 0, y: 0, w, h }
+
+// Extract dimensions
 camera.addEventListener('loadedmetadata', ({ target }) => {
-  const { videoWidth, videoHeight } = target
+  const { videoWidth: sw, videoHeight: sh } = target
 
-  Object.assign(camera, { width: videoWidth, height: videoHeight })
+  const dx = sw - w
+  const dy = sh - h
+
+  screen.x -= 0.5 * dx
+  screen.y -= 0.5 * dy
+
+  screen.w += dx
+  screen.h += dy
+
+  Object.assign(camera, { width: sw, height: sh })
 })
-
-camera.setAttribute('src', 'BigBuckBunny.mp4')
-canvas.parentNode.insertBefore(camera, canvas)
 
 const worker = new Worker('worker.js')
 
@@ -25,36 +54,37 @@ worker.addEventListener('message', ({ data }) => {
   master.putImageData(data.result, 0, 0)
 })
 
-const { width: w, height: h } = canvas
-
 const shadow = canvas.cloneNode().getContext('2d')
+
 const buffer = (source, target) => {
-  target.drawImage(source, 0, 0, w, h)
+  target.drawImage(source, 0, 0, screen.w, screen.h, screen.x, screen.y, screen.w, screen.h)
 
   return target.getImageData(0, 0, w, h)
 }
 
 const lineup = fn => window.requestAnimationFrame(fn)
 const repeat = () => {
-  if (!camera.paused) {
-    worker.postMessage({ source: buffer(camera, shadow) })
-    lineup(repeat)
+  if (camera.paused) {
+    return
   }
+
+  worker.postMessage({ source: buffer(camera, shadow) })
+  lineup(repeat)
 }
 
 const figure = document.querySelector('figure')
 const button = document.querySelector('a')
 
-'touchstart mousedown'.split(' ').forEach((type) => {
-  button.addEventListener(type, () => {
-    if (camera.paused) {
-      camera.play().then(() => {
-        lineup(repeat)
-      }).catch(console.log)
-    } else {
-      camera.pause()
-    }
+button.addEventListener('click', (e) => {
+  e.preventDefault()
 
-    figure.classList.toggle('is-playing')
-  })
+  if (camera.paused) {
+    camera.play().then(() => {
+      lineup(repeat)
+    }).catch(console.log)
+  } else {
+    camera.pause()
+  }
+
+  figure.classList.toggle('is-playing')
 })
