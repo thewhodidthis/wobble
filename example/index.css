@@ -45,7 +45,7 @@ img {
 }
 
 canvas {
-  background: #000;
+  background: #000 url('screenshot.png') no-repeat;
 }
 
 video {
@@ -85,22 +85,22 @@ video {
   text-decoration: none;
 }
 
-.is-playing .button::before,
-.is-playing .button::after {
+.is-active .button::before,
+.is-active .button::after {
   background: rgba(255, 255, 255, 0.7);
   border: 0;
 }
 
-.is-playing .button::before {
+.is-active .button::before {
   margin-left: -0.75em;
 }
 
-.is-playing .button::after {
+.is-active .button::after {
   margin-left: 0.75em;
 }
 
-.is-playing .button:hover::before,
-.is-playing .button:hover::after {
+.is-active .button:hover::before,
+.is-active .button:hover::after {
   height: 3em;
   width: 1em;
 }
@@ -111,4 +111,8 @@ video {
 
 .is-iframe figcaption {
   display: none;
+}
+
+.is-mobile canvas {
+  background: #000 url('screenshot.png') no-repeat;
 }

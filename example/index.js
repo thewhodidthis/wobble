@@ -5,6 +5,7 @@ if (window !== window.top) {
   document.documentElement.classList.add('is-iframe');
 }
 
+var figure = document.querySelector('figure');
 var canvas = document.querySelector('canvas');
 var master = canvas.getContext('2d');
 var camera = document.createElement('video');
@@ -15,11 +16,11 @@ var revert = function () {
     camera.setAttribute(v, v);
   });
 
-  camera.setAttribute('poster', 'poster.png');
   camera.setAttribute('preload', 'auto');
   camera.setAttribute('src', 'BigBuckBunny.mp4');
 
   canvas.parentNode.insertBefore(camera, canvas);
+  figure.classList.add('is-mobile');
 };
 
 if (navigator.mediaDevices) {
@@ -82,7 +83,6 @@ var repeat = function () {
   lineup(repeat);
 };
 
-var figure = document.querySelector('figure');
 var button = document.querySelector('a');
 
 button.addEventListener('click', function (e) {
@@ -96,7 +96,7 @@ button.addEventListener('click', function (e) {
     camera.pause();
   }
 
-  figure.classList.toggle('is-playing');
+  figure.classList.toggle('is-active');
 });
 
 }());

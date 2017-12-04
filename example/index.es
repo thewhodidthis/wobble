@@ -2,6 +2,7 @@ if (window !== window.top) {
   document.documentElement.classList.add('is-iframe')
 }
 
+const figure = document.querySelector('figure')
 const canvas = document.querySelector('canvas')
 const master = canvas.getContext('2d')
 const camera = document.createElement('video')
@@ -16,6 +17,7 @@ const revert = () => {
   camera.setAttribute('src', 'BigBuckBunny.mp4')
 
   canvas.parentNode.insertBefore(camera, canvas)
+  figure.classList.add('is-mobile')
 }
 
 if (navigator.mediaDevices) {
@@ -72,7 +74,6 @@ const repeat = () => {
   lineup(repeat)
 }
 
-const figure = document.querySelector('figure')
 const button = document.querySelector('a')
 
 button.addEventListener('click', (e) => {
@@ -86,5 +87,5 @@ button.addEventListener('click', (e) => {
     camera.pause()
   }
 
-  figure.classList.toggle('is-playing')
+  figure.classList.toggle('is-active')
 })
