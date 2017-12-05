@@ -17,7 +17,7 @@ var revert = function () {
   });
 
   camera.setAttribute('preload', 'auto');
-  camera.setAttribute('src', 'BigBuckBunny.mp4');
+  camera.setAttribute('src', 'footage.mp4');
 
   canvas.parentNode.insertBefore(camera, canvas);
   figure.classList.add('is-mobile');
@@ -57,14 +57,6 @@ camera.addEventListener('loadeddata', function (ref) {
   Object.assign(camera, { width: sw, height: sh });
 });
 
-var worker = new Worker('worker.js');
-
-worker.addEventListener('message', function (ref) {
-  var data = ref.data;
-
-  master.putImageData(data.result, 0, 0);
-});
-
 var shadow = canvas.cloneNode().getContext('2d');
 
 var buffer = function (source, target) {
@@ -73,6 +65,8 @@ var buffer = function (source, target) {
   return target.getImageData(0, 0, w, h)
 };
 
+var worker = new Worker('worker.js');
+
 var lineup = function (fn) { return window.requestAnimationFrame(fn); };
 var repeat = function () {
   if (camera.paused) {
@@ -80,12 +74,17 @@ var repeat = function () {
   }
 
   worker.postMessage({ source: buffer(camera, shadow) });
-  lineup(repeat);
 };
 
-var button = document.querySelector('a');
+worker.addEventListener('message', function (ref) {
+  var data = ref.data;
 
-button.addEventListener('click', function (e) {
+  master.putImageData(data.result, 0, 0);
+
+  lineup(repeat);
+});
+
+document.querySelector('a').addEventListener('click', function (e) {
   e.preventDefault();
 
   if (camera.paused) {

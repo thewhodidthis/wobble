@@ -14,7 +14,7 @@ const revert = () => {
   })
 
   camera.setAttribute('preload', 'auto')
-  camera.setAttribute('src', 'BigBuckBunny.mp4')
+  camera.setAttribute('src', 'footage.mp4')
 
   canvas.parentNode.insertBefore(camera, canvas)
   figure.classList.add('is-mobile')
@@ -50,12 +50,6 @@ camera.addEventListener('loadeddata', ({ target }) => {
   Object.assign(camera, { width: sw, height: sh })
 })
 
-const worker = new Worker('worker.js')
-
-worker.addEventListener('message', ({ data }) => {
-  master.putImageData(data.result, 0, 0)
-})
-
 const shadow = canvas.cloneNode().getContext('2d')
 
 const buffer = (source, target) => {
@@ -64,6 +58,8 @@ const buffer = (source, target) => {
   return target.getImageData(0, 0, w, h)
 }
 
+const worker = new Worker('worker.js')
+
 const lineup = fn => window.requestAnimationFrame(fn)
 const repeat = () => {
   if (camera.paused) {
@@ -71,12 +67,15 @@ const repeat = () => {
   }
 
   worker.postMessage({ source: buffer(camera, shadow) })
-  lineup(repeat)
 }
 
-const button = document.querySelector('a')
+worker.addEventListener('message', ({ data }) => {
+  master.putImageData(data.result, 0, 0)
 
-button.addEventListener('click', (e) => {
+  lineup(repeat)
+})
+
+document.querySelector('a').addEventListener('click', (e) => {
   e.preventDefault()
 
   if (camera.paused) {
