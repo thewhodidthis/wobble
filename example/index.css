@@ -1,3 +1,9 @@
+@keyframes hide {
+  to {
+    visibility: hidden;
+  }
+}
+
 html {
   font: 16px/1.25 arial, sans-serif;
 }
@@ -101,7 +107,9 @@ video {
 
 .is-active .button:hover::before,
 .is-active .button:hover::after {
+  animation: hide 0s 1s forwards;
   height: 3em;
+  visibility: visible;
   width: 1em;
 }
 
