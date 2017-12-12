@@ -1,5 +1,5 @@
 ## Wobble
-> Slit scan type canvas based pixel bending
+> Slit scan type, web worker friendly pixel bending
 
 ### Setup
 ```sh
