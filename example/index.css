@@ -114,6 +114,7 @@ video {
 }
 
 .is-iframe {
+  font-size: 0.8125rem;
   overflow: hidden;
 }
 
