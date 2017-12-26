@@ -1,6 +1,6 @@
 {
   "name": "@thewhodidthis/wobble",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Slit scan thing",
   "main": "index",
   "module": "index.mjs",
