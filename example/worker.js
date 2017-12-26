@@ -1,10 +1,9 @@
-importScripts('wobble.js');
+importScripts('filter.js');
 
-var filter = wobble();
+const filter = wobble(90);
 
-self.addEventListener('message', function (e) {
-  var result = filter(e.data.source)
-
-  self.postMessage({ result });
+self.addEventListener('message', (e) => {
+  self.postMessage({
+    result: filter(e.data.source)
+  });
 });
-
