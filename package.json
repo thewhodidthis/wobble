@@ -2,8 +2,8 @@
   "name": "@thewhodidthis/wobble",
   "version": "0.0.1",
   "description": "Slit scan thing",
-  "main": "index.js",
-  "module": "index.es",
+  "main": "index",
+  "module": "index.mjs",
   "homepage": "https://github.com/thewhodidthis/wobble#readme",
   "repository": {
     "type": "git",
@@ -14,10 +14,10 @@
   },
   "scripts": {
     "pretest": "eslint test.js",
-    "test": "rollup -c node:x -f iife test.js | kpow",
-    "prestart": "eslint index.es",
-    "start": "rollup -f cjs index.es > index.js",
-    "poststart": "rollup -f iife -n wobble index.es | buble > example/wobble.js",
+    "test": "node test.js",
+    "prestart": "eslint index.mjs",
+    "start": "rollup -f cjs index.mjs | buble > index.js",
+    "poststart": "rollup -f iife -n wobble index.mjs | buble > example/filter.js",
     "preexample": "eslint example/index.es",
     "example": "cd example; rollup -f iife index.es | buble > index.js"
   },
@@ -32,15 +32,12 @@
   "devDependencies": {
     "@thewhodidthis/eslint-config": "latest",
     "buble": "latest",
-    "cutaway": "latest",
     "eslint": "latest",
-    "kpow": "latest",
     "rollup": "latest",
-    "rollup-config-x": "latest",
     "tapeless": "latest"
   },
   "keywords": [
-    "slit-scan",
+    "pixels",
     "canvas"
   ],
   "author": "sChzs BkgNns <sotirios.bakagiannis@gmail.com> (https://www.thewhodidthis.com)",
