@@ -1,35 +1,54 @@
 'use strict';
 
-const wobble = (cuts = 40) => {
-  const supply = [];
+// # Slit scan thing
 
-  return ({ height: h, width: w, data } = new ImageData(1, 1)) => {
-    const frames = supply.push(data);
-    const excess = frames - cuts;
+// Feeds on just the number of chunks or divisions (resolution),
+// returns a lambda for processing each data frame
+var wobble = function (lines) {
+  if ( lines === void 0 ) lines = 40;
 
-    if (excess) {
-      supply.splice(0, excess);
+  // For caching consecutive frames
+  var store = [];
+
+  // Accepts and returns an `ImageData` like object of which,
+  // `data` of type `Uint8ClampedArray` is the only required property
+  return function (input) {
+    if ( input === void 0 ) input = { data: [] };
+
+    // The typed array that gets processed
+    var frame = new Uint8ClampedArray(input.data.buffer);
+
+    // Copy input data
+    var clone = new Uint8ClampedArray(frame);
+
+    // Store input data
+    var storeSizeMaybe = store.push(clone);
+
+    // Limit store size within resolution
+    if (lines - storeSizeMaybe < 0) {
+      store.shift();
     }
 
-    const pixels = 4 * w * h;
-    const slices = supply.length;
-    const spread = Math.floor(pixels / slices);
+    // Because store fills up gradually up to line count
+    var storeSize = store.length;
+    var frameSize = frame.length;
 
-    const lookup = new Uint8ClampedArray(pixels);
-    const result = new ImageData(lookup, w, h);
+    var chunkSize = Math.floor(frameSize / storeSize);
 
-    for (let i = 0; i < slices; i += 1) {
-      const begin = i * spread;
-      const until = Math.max(begin * 2, pixels);
+    // Avoid using forEach, because speed matters in this case
+    for (var i = 0; i < storeSize; i += 1) {
+      var a = i * chunkSize;
+      var b = a + chunkSize;
 
-      const frame = supply[i];
-      const chunk = frame.subarray(begin, until);
+      var block = store[i];
+      var chunk = block.subarray(a, b);
 
-      lookup.set(chunk, begin);
+      frame.set(chunk, a);
     }
 
-    return result
+    return input
   }
 };
 
 module.exports = wobble;
+
