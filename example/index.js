@@ -42,11 +42,11 @@ var screen = { x: 0, y: 0, w: w, h: h };
 camera.addEventListener('loadeddata', function (ref) {
   var target = ref.target;
 
-  var sw = target.videoWidth;
-  var sh = target.videoHeight;
+  var vw = target.videoWidth;
+  var vh = target.videoHeight;
 
-  var dx = sw - w;
-  var dy = sh - h;
+  var dx = vw - w;
+  var dy = vh - h;
 
   screen.x -= 0.5 * dx;
   screen.y -= 0.5 * dy;
@@ -54,45 +54,43 @@ camera.addEventListener('loadeddata', function (ref) {
   screen.w += dx;
   screen.h += dy;
 
-  Object.assign(camera, { width: sw, height: sh });
+  Object.assign(camera, { width: vw, height: vh });
 });
 
-var shadow = canvas.cloneNode().getContext('2d');
-
-var buffer = function (source, target) {
-  target.drawImage(source, 0, 0, screen.w, screen.h, screen.x, screen.y, screen.w, screen.h);
-
-  return target.getImageData(0, 0, w, h)
-};
-
+var buffer = canvas.cloneNode().getContext('2d');
 var worker = new Worker('worker.js');
 
-var lineup = function (fn) { return window.requestAnimationFrame(fn); };
 var repeat = function () {
   if (camera.paused) {
     return
   }
 
-  worker.postMessage({ source: buffer(camera, shadow) });
+  buffer.drawImage(camera, 0, 0, screen.w, screen.h, screen.x, screen.y, screen.w, screen.h);
+
+  var source = buffer.getImageData(0, 0, w, h);
+
+  worker.postMessage({ source: source });
 };
 
-worker.addEventListener('message', function (ref) {
-  var data = ref.data;
+var render = function (e) {
+  master.putImageData(e.data.result, 0, 0);
 
-  master.putImageData(data.result, 0, 0);
+  window.requestAnimationFrame(repeat);
+};
 
-  lineup(repeat);
-});
+worker.addEventListener('message', render);
 
 document.querySelector('a').addEventListener('click', function (e) {
   e.preventDefault();
 
-  if (camera.paused) {
-    camera.play().then(function () {
-      lineup(repeat);
-    }).catch(console.log);
-  } else {
+  var playing = camera.paused ? camera.play() : undefined;
+
+  if (playing === undefined) {
     camera.pause();
+  } else {
+    playing.then(function () {
+      window.requestAnimationFrame(repeat);
+    }).catch(console.log);
   }
 
   figure.classList.toggle('is-active');

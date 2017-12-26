@@ -36,10 +36,10 @@ const screen = { x: 0, y: 0, w, h }
 
 // Extract dimensions
 camera.addEventListener('loadeddata', ({ target }) => {
-  const { videoWidth: sw, videoHeight: sh } = target
+  const { videoWidth: vw, videoHeight: vh } = target
 
-  const dx = sw - w
-  const dy = sh - h
+  const dx = vw - w
+  const dy = vh - h
 
   screen.x -= 0.5 * dx
   screen.y -= 0.5 * dy
@@ -47,43 +47,43 @@ camera.addEventListener('loadeddata', ({ target }) => {
   screen.w += dx
   screen.h += dy
 
-  Object.assign(camera, { width: sw, height: sh })
+  Object.assign(camera, { width: vw, height: vh })
 })
 
-const shadow = canvas.cloneNode().getContext('2d')
-
-const buffer = (source, target) => {
-  target.drawImage(source, 0, 0, screen.w, screen.h, screen.x, screen.y, screen.w, screen.h)
-
-  return target.getImageData(0, 0, w, h)
-}
-
+const buffer = canvas.cloneNode().getContext('2d')
 const worker = new Worker('worker.js')
 
-const lineup = fn => window.requestAnimationFrame(fn)
 const repeat = () => {
   if (camera.paused) {
     return
   }
 
-  worker.postMessage({ source: buffer(camera, shadow) })
+  buffer.drawImage(camera, 0, 0, screen.w, screen.h, screen.x, screen.y, screen.w, screen.h)
+
+  const source = buffer.getImageData(0, 0, w, h)
+
+  worker.postMessage({ source })
 }
 
-worker.addEventListener('message', ({ data }) => {
-  master.putImageData(data.result, 0, 0)
+const render = (e) => {
+  master.putImageData(e.data.result, 0, 0)
 
-  lineup(repeat)
-})
+  window.requestAnimationFrame(repeat)
+}
+
+worker.addEventListener('message', render)
 
 document.querySelector('a').addEventListener('click', (e) => {
   e.preventDefault()
 
-  if (camera.paused) {
-    camera.play().then(() => {
-      lineup(repeat)
-    }).catch(console.log)
-  } else {
+  const playing = camera.paused ? camera.play() : undefined
+
+  if (playing === undefined) {
     camera.pause()
+  } else {
+    playing.then(() => {
+      window.requestAnimationFrame(repeat)
+    }).catch(console.log)
   }
 
   figure.classList.toggle('is-active')
