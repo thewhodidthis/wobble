@@ -8,7 +8,7 @@ npm i thewhodidthis/wobble
 
 ### Usage
 ```js
-import createFilter from '@thewhodidthis/wobble'
+import wobble from '@thewhodidthis/wobble'
 
 const canvas = document.createElement('canvas')
 const master = canvas.getContext('2d')
@@ -26,7 +26,7 @@ if (navigator.mediaDevices) {
   }).catch(console.log)
 }
 
-const filter = createFilter(50)
+const filter = wobble(50)
 const buffer = canvas.cloneNode().getContext('2d')
 
 const repeat = () => {
