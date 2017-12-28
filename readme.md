@@ -8,7 +8,7 @@ npm i thewhodidthis/wobble
 
 ### Usage
 ```js
-import wobble from '@thewhodidthis/wobble'
+import bender from '@thewhodidthis/wobble'
 
 const canvas = document.createElement('canvas')
 const master = canvas.getContext('2d')
@@ -26,7 +26,7 @@ if (navigator.mediaDevices) {
   }).catch(console.log)
 }
 
-const filter = wobble(50)
+const filter = bender(50)
 const buffer = canvas.cloneNode().getContext('2d')
 
 const repeat = () => {
