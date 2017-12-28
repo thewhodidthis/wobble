@@ -1,27 +1,27 @@
 'use strict';
 
-// # Slit scan thing
+// # Wobble
+// Slit scan thing
 
-// Feeds on just the number of chunks or divisions (resolution),
-// returns a lambda for processing each data frame
+// Set up with number of strips (resolution),
+// get a lambda for processing each data frame in return
 var wobble = function (lines) {
   if ( lines === void 0 ) lines = 40;
 
   // For caching consecutive frames
   var store = [];
 
-  // Accepts and returns an `ImageData` like object of which,
+  // Accepts and returns an `ImageData` like object, of which
   // `data` of type `Uint8ClampedArray` is the only required property
   return function (input) {
     if ( input === void 0 ) input = { data: [] };
 
-    // The typed array that gets processed
+    // Wrap input just in case, this is the data view that
+    // gets processed in place
     var frame = new Uint8ClampedArray(input.data.buffer);
 
-    // Copy input data
+    // Copy input data, save for later
     var clone = new Uint8ClampedArray(frame);
-
-    // Store input data
     var storeSizeMaybe = store.push(clone);
 
     // Limit store size within resolution
@@ -29,7 +29,7 @@ var wobble = function (lines) {
       store.shift();
     }
 
-    // Because store fills up gradually up to line count
+    // Calculate range in pixels for each strip
     var storeSize = store.length;
     var frameSize = frame.length;
 
@@ -37,7 +37,10 @@ var wobble = function (lines) {
 
     // Avoid using forEach, because speed matters in this case
     for (var i = 0; i < storeSize; i += 1) {
+      // Chunk start
       var a = i * chunkSize;
+
+      // Chunk end
       var b = a + chunkSize;
 
       var block = store[i];
