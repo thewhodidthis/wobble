@@ -74,7 +74,6 @@ var repeat = function () {
 
 var render = function (e) {
   master.putImageData(e.data.result, 0, 0);
-
   window.requestAnimationFrame(repeat);
 };
 

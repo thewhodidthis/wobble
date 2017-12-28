@@ -67,7 +67,6 @@ const repeat = () => {
 
 const render = (e) => {
   master.putImageData(e.data.result, 0, 0)
-
   window.requestAnimationFrame(repeat)
 }
 
