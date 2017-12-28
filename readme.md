@@ -1,5 +1,4 @@
-## Wobble
-> Slit scan type, web worker friendly pixel bending
+> Web worker friendly pixel bending psychedelica
 
 ### Setup
 ```sh
