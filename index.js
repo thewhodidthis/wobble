@@ -5,8 +5,8 @@
 
 // Set up with number of strips (resolution),
 // get a lambda for processing each data frame in return
-var wobble = function (lines) {
-  if ( lines === void 0 ) lines = 40;
+var wobble = function (depth) {
+  if ( depth === void 0 ) depth = 40;
 
   // For caching consecutive frames
   var store = [];
@@ -25,7 +25,7 @@ var wobble = function (lines) {
     var storeSizeMaybe = store.push(clone);
 
     // Limit store size within resolution
-    if (lines - storeSizeMaybe < 0) {
+    if (depth - storeSizeMaybe < 0) {
       store.shift();
     }
 

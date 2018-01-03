@@ -3,7 +3,7 @@
 
 // Set up with number of strips (resolution),
 // get a lambda for processing each data frame in return
-const wobble = (lines = 40) => {
+const wobble = (depth = 40) => {
   // For caching consecutive frames
   const store = []
 
@@ -19,7 +19,7 @@ const wobble = (lines = 40) => {
     const storeSizeMaybe = store.push(clone)
 
     // Limit store size within resolution
-    if (lines - storeSizeMaybe < 0) {
+    if (depth - storeSizeMaybe < 0) {
       store.shift()
     }
 
