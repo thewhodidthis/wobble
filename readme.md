@@ -18,12 +18,12 @@ const { width: w, height: h } = canvas
 const camera = document.createElement('video')
 
 if (navigator.mediaDevices) {
-  navigator.mediaDevices.getUserMedia({
-      video: { width: w },
-      audio: false
-  }).then((stream) => {
-      camera.srcObject = stream
-  }).catch(console.log)
+    navigator.mediaDevices.getUserMedia({
+        video: { width: w },
+        audio: false
+    }).then((stream) => {
+        camera.srcObject = stream
+    }).catch(console.log)
 }
 
 const filter = bender(50)
