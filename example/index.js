@@ -17,7 +17,7 @@ var revert = function () {
   });
 
   camera.setAttribute('preload', 'auto');
-  camera.setAttribute('src', 'footage.mp4');
+  camera.setAttribute('src', 'source.mp4');
 
   canvas.parentNode.insertBefore(camera, canvas);
   figure.classList.add('is-mobile');
