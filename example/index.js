@@ -16,8 +16,10 @@ var revert = function () {
     camera.setAttribute(v, v);
   });
 
-  camera.setAttribute('preload', 'auto');
+  // Fallback video from
+  // https://www.pond5.com/stock-footage/44575894/girl-campers-dancing-campsite.html
   camera.setAttribute('src', 'source.mp4');
+  camera.setAttribute('preload', 'auto');
 
   canvas.parentNode.insertBefore(camera, canvas);
   figure.classList.add('is-mobile');
