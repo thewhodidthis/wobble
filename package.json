@@ -16,22 +16,20 @@
     "pretest": "eslint test.js",
     "test": "node test.js",
     "prestart": "eslint index.mjs",
-    "start": "rollup -f cjs index.mjs | buble > index.js",
-    "poststart": "rollup -f iife -n wobble index.mjs > example/filter.js",
-    "preexample": "eslint example/index.es",
-    "example": "cd example; rollup -f iife index.es | buble > index.js"
+    "start": "rollup -f cjs index.mjs > index.js",
+    "preexample": "eslint example/index.js",
+    "example": "rollup -f iife -n wobble index.mjs > example/wobble.js"
   },
   "eslintConfig": {
     "extends": "@thewhodidthis"
   },
   "engines": {
-    "node": ">=6.4.0",
-    "npm": ">=3.11.0"
+    "node": ">=6.11.0",
+    "npm": ">=3.10.10"
   },
   "dependencies": {},
   "devDependencies": {
     "@thewhodidthis/eslint-config": "latest",
-    "buble": "latest",
     "eslint": "latest",
     "rollup": "latest",
     "tapeless": "latest"
