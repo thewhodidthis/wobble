@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <title>&middot; Wobble &middot;</title>
     <link rel="icon" href="https://example.thewhodidthis.com/favicon.ico">
-    <link rel="preload" href="index.js" as="script">
     <link rel="preload" href="index.css" as="style">
     <link rel="stylesheet" href="index.css">
   </head>
@@ -23,6 +22,11 @@
     </figure>
 
     <noscript><small><em>please enable javascript</em></small></noscript>
-    <script src="index.js"></script>
+    <script async src="index.js" type="module"></script>
+    <script nomodule>
+      (function () {
+        console.log('please make sure your browser supports es6 modules');
+      })()
+    </script>
   </body>
 </html>

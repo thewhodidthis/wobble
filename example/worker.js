@@ -1,4 +1,4 @@
-importScripts('filter.js')
+importScripts('wobble.js')
 
 const filter = wobble(100)
 

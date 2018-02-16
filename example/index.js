@@ -1,101 +1,91 @@
-(function () {
-'use strict';
-
 if (window !== window.top) {
-  document.documentElement.classList.add('is-iframe');
+  document.documentElement.classList.add('is-iframe')
 }
 
-var figure = document.querySelector('figure');
-var canvas = document.querySelector('canvas');
-var master = canvas.getContext('2d');
-var camera = document.createElement('video');
+const figure = document.querySelector('figure')
+const canvas = document.querySelector('canvas')
+const master = canvas.getContext('2d')
+const camera = document.createElement('video')
 
 // In case webcam stream not accessible
-var revert = function () {
-  'playsinline loop muted'.split(' ').forEach(function (v) {
-    camera.setAttribute(v, v);
-  });
+const revert = () => {
+  'playsinline loop muted'.split(' ').forEach((v) => {
+    camera.setAttribute(v, v)
+  })
 
   // Fallback video from
   // https://www.pond5.com/stock-footage/44575894/girl-campers-dancing-campsite.html
-  camera.setAttribute('src', 'source.mp4');
-  camera.setAttribute('preload', 'auto');
+  camera.setAttribute('src', 'clip.mp4')
+  camera.setAttribute('preload', 'auto')
 
-  canvas.parentNode.insertBefore(camera, canvas);
-  figure.classList.add('is-mobile');
-};
+  canvas.parentNode.insertBefore(camera, canvas)
+  figure.classList.add('is-mobile')
+}
 
 if (navigator.mediaDevices) {
   navigator.mediaDevices.getUserMedia({
     video: { width: 640 },
     audio: false
-  }).then(function (stream) {
-    camera.srcObject = stream;
-  }).catch(revert);
+  }).then((stream) => {
+    camera.srcObject = stream
+  }).catch(revert)
 } else {
-  revert();
+  revert()
 }
 
-var w = canvas.width;
-var h = canvas.height;
-var screen = { x: 0, y: 0, w: w, h: h };
+const { width: w, height: h } = canvas
+const screen = { x: 0, y: 0, w, h }
 
 // Extract dimensions
-camera.addEventListener('loadeddata', function (ref) {
-  var target = ref.target;
+camera.addEventListener('loadeddata', ({ target }) => {
+  const { videoWidth: vw, videoHeight: vh } = target
 
-  var vw = target.videoWidth;
-  var vh = target.videoHeight;
+  const dx = vw - w
+  const dy = vh - h
 
-  var dx = vw - w;
-  var dy = vh - h;
+  screen.x -= 0.5 * dx
+  screen.y -= 0.5 * dy
 
-  screen.x -= 0.5 * dx;
-  screen.y -= 0.5 * dy;
+  screen.w += dx
+  screen.h += dy
 
-  screen.w += dx;
-  screen.h += dy;
+  Object.assign(camera, { width: vw, height: vh })
+})
 
-  Object.assign(camera, { width: vw, height: vh });
-});
+const buffer = canvas.cloneNode().getContext('2d')
+const worker = new Worker('worker.js')
 
-var buffer = canvas.cloneNode().getContext('2d');
-var worker = new Worker('worker.js');
-
-var repeat = function () {
+const repeat = () => {
   if (camera.paused) {
     return
   }
 
-  buffer.drawImage(camera, 0, 0, screen.w, screen.h, screen.x, screen.y, screen.w, screen.h);
+  buffer.drawImage(camera, 0, 0, screen.w, screen.h, screen.x, screen.y, screen.w, screen.h)
 
-  var source = buffer.getImageData(0, 0, w, h);
+  const source = buffer.getImageData(0, 0, w, h)
 
-  worker.postMessage({ source: source });
-};
+  worker.postMessage({ source })
+}
 
-var render = function (e) {
-  master.putImageData(e.data.result, 0, 0);
-  window.requestAnimationFrame(repeat);
-};
+const render = (e) => {
+  master.putImageData(e.data.result, 0, 0)
+  window.requestAnimationFrame(repeat)
+}
 
-worker.addEventListener('message', render);
+worker.addEventListener('message', render)
 
-document.querySelector('a').addEventListener('click', function (e) {
-  e.preventDefault();
+document.querySelector('a').addEventListener('click', (e) => {
+  e.preventDefault()
 
-  var playing = camera.paused ? camera.play() : undefined;
+  const playing = camera.paused ? camera.play() : undefined
 
   if (playing === undefined) {
-    camera.pause();
+    camera.pause()
   } else {
-    playing.then(function () {
-      window.requestAnimationFrame(repeat);
-    }).catch(console.log);
+    playing.then(() => {
+      window.requestAnimationFrame(repeat)
+    }).catch(console.log)
   }
 
-  figure.classList.toggle('is-active');
-});
-
-}());
-
+  figure.classList.toggle('is-active')
+})
