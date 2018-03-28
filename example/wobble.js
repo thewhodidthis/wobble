@@ -1,55 +1,58 @@
-var wobble = (function () {
-'use strict';
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global.wobble = factory());
+}(this, (function () { 'use strict';
 
-// # Wobble
-// Slit scan thing
+  // # Wobble
+  // Slit scan thing
 
-// Set up with number of strips (resolution),
-// get a lambda for processing each data frame in return
-const wobble = (depth = 40) => {
-  // For caching consecutive frames
-  const store = [];
+  // Set up with number of strips (resolution),
+  // get a lambda for processing each data frame in return
+  const wobble = (depth = 40) => {
+    // For caching consecutive frames
+    const store = [];
 
-  // Accepts and returns an `ImageData` like object, of which
-  // `data` of type `Uint8ClampedArray` is the only required property
-  return (input = { data: [] }) => {
-    // Wrap input just in case, this is the data view that
-    // gets processed in place
-    const frame = new Uint8ClampedArray(input.data.buffer);
+    // Accepts and returns an `ImageData` like object, of which
+    // `data` of type `Uint8ClampedArray` is the only required property
+    return (input = { data: [] }) => {
+      // Wrap input just in case, this is the data view that
+      // gets processed in place
+      const frame = new Uint8ClampedArray(input.data.buffer);
 
-    // Copy input data, save for later
-    const clone = new Uint8ClampedArray(frame);
-    const storeSizeMaybe = store.push(clone);
+      // Copy input data, save for later
+      const clone = new Uint8ClampedArray(frame);
+      const storeSizeMaybe = store.push(clone);
 
-    // Limit store size within resolution
-    if (depth - storeSizeMaybe < 0) {
-      store.shift();
+      // Limit store size within resolution
+      if (depth - storeSizeMaybe < 0) {
+        store.shift();
+      }
+
+      // Calculate range in pixels for each strip
+      const storeSize = store.length;
+      const frameSize = frame.length;
+
+      const chunkSize = Math.floor(frameSize / storeSize);
+
+      // Avoid using forEach, because speed matters in this case
+      for (let i = 0; i < storeSize; i += 1) {
+        // Chunk start
+        const a = i * chunkSize;
+
+        // Chunk end
+        const b = a + chunkSize;
+
+        const block = store[i];
+        const chunk = block.subarray(a, b);
+
+        frame.set(chunk, a);
+      }
+
+      return input
     }
+  };
 
-    // Calculate range in pixels for each strip
-    const storeSize = store.length;
-    const frameSize = frame.length;
+  return wobble;
 
-    const chunkSize = Math.floor(frameSize / storeSize);
-
-    // Avoid using forEach, because speed matters in this case
-    for (let i = 0; i < storeSize; i += 1) {
-      // Chunk start
-      const a = i * chunkSize;
-
-      // Chunk end
-      const b = a + chunkSize;
-
-      const block = store[i];
-      const chunk = block.subarray(a, b);
-
-      frame.set(chunk, a);
-    }
-
-    return input
-  }
-};
-
-return wobble;
-
-}());
+})));

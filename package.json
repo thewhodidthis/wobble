@@ -18,7 +18,7 @@
     "prestart": "eslint index.mjs",
     "start": "rollup -f cjs index.mjs > index.js",
     "preexample": "eslint example/index.js",
-    "example": "rollup -f iife -n wobble index.mjs > example/wobble.js"
+    "example": "rollup -f umd -n wobble index.mjs > example/wobble.js"
   },
   "eslintConfig": {
     "extends": "@thewhodidthis"
