@@ -33,20 +33,20 @@
       const storeSize = store.length;
       const frameSize = frame.length;
 
-      const chunkSize = Math.floor(frameSize / storeSize);
+      const stripSize = Math.floor(frameSize / storeSize);
 
       // Avoid using forEach, because speed matters in this case
       for (let i = 0; i < storeSize; i += 1) {
         // Chunk start
-        const a = i * chunkSize;
+        const a = i * stripSize;
 
         // Chunk end
-        const b = a + chunkSize;
+        const b = a + stripSize;
 
         const block = store[i];
-        const chunk = block.subarray(a, b);
+        const strip = block.subarray(a, b);
 
-        frame.set(chunk, a);
+        frame.set(strip, a);
       }
 
       return input
