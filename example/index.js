@@ -22,7 +22,7 @@ const revert = () => {
   figure.classList.add('is-mobile')
 }
 
-if (navigator.mediaDevices) {
+if (window === window.top && navigator.mediaDevices) {
   navigator.mediaDevices.getUserMedia({
     video: { width: 640 },
     audio: false

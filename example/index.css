@@ -6,13 +6,14 @@
 
 html {
   font: 16px/1.25 arial, sans-serif;
+  height: 100%;
 }
 
 body {
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   margin: 0;
-  overflow: hidden;
-  padding: 0.5rem;
+  min-height: 100%;
 }
 
 a {
@@ -34,15 +35,13 @@ p {
 }
 
 figure {
-  left: 50%;
-  margin: -180px 0 0 -320px;
-  position: absolute;
-  text-align: center;
-  top: 50%;
+  margin: auto;
+  padding: 1.5rem 0 1rem;
 }
 
 figcaption {
   margin: 0.5rem 0 0;
+  text-align: center;
 }
 
 canvas,
@@ -51,7 +50,7 @@ img {
 }
 
 canvas {
-  background: #000;
+  background: black;
 }
 
 video {
@@ -113,15 +112,53 @@ video {
   width: 1em;
 }
 
-.is-iframe {
-  font-size: 0.8125rem;
-  overflow: hidden;
+.is-iframe figure {
+  margin: 0;
+  padding: 0;
 }
 
 .is-iframe figcaption {
   display: none;
 }
 
+.is-iframe canvas,
+.is-iframe img {
+  height: auto;
+  max-width: 100%;
+  width: 100%;
+}
+
+.is-iframe canvas,
+.is-iframe img {
+  height: auto;
+  max-width: 100%;
+  width: 100%;
+}
+
 .is-mobile canvas {
-  background: #000 url('screenshot.png') no-repeat;
+  background: black url('screenshot.jpg') center/cover no-repeat;
+}
+
+@media all and (max-width: 600px) {
+  .is-iframe {
+    font-size: 14px;
+  }
+}
+
+@media all and (max-width: 500px) {
+  .is-iframe {
+    font-size: 12px;
+  }
+}
+
+@media all and (max-width: 400px) {
+  .is-iframe {
+    font-size: 11px;
+  }
+}
+
+@media all and (max-width: 320px) {
+  .is-iframe {
+    font-size: 9px;
+  }
 }
