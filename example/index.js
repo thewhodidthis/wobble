@@ -1,7 +1,3 @@
-if (window !== window.top) {
-  document.documentElement.classList.add('is-iframe')
-}
-
 const figure = document.querySelector('figure')
 const canvas = document.querySelector('canvas')
 const master = canvas.getContext('2d')
@@ -19,7 +15,6 @@ const revert = () => {
   camera.setAttribute('preload', 'auto')
 
   canvas.parentNode.insertBefore(camera, canvas)
-  figure.classList.add('is-mobile')
 }
 
 if (window === window.top && navigator.mediaDevices) {
