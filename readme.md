@@ -18,40 +18,40 @@ const { width: w, height: h } = canvas
 const camera = document.createElement('video')
 
 if (navigator.mediaDevices) {
-    navigator.mediaDevices.getUserMedia({
-        video: { width: w },
-        audio: false
-    }).then((stream) => {
-        camera.srcObject = stream
-    }).catch(console.log)
+  navigator.mediaDevices.getUserMedia({
+    video: { width: w },
+    audio: false
+  }).then((stream) => {
+    camera.srcObject = stream
+  }).catch(console.log)
 }
 
 const filter = bender(50)
 const buffer = canvas.cloneNode().getContext('2d')
 
 const repeat = () => {
-    buffer.drawImage(camera, 0, 0)
+  buffer.drawImage(camera, 0, 0)
 
-    const source = buffer.getImageData(0, 0, w, h)
-    const result = filter(source)
+  const source = buffer.getImageData(0, 0, w, h)
+  const result = filter(source)
 
-    master.putImageData(result, 0, 0)
+  master.putImageData(result, 0, 0)
 
-    window.requestAnimationFrame(repeat)
+  window.requestAnimationFrame(repeat)
 }
 
 document.body.appendChild(canvas)
 
 document.addEventListener('click', (e) => {
-    e.preventDefault()
+  e.preventDefault()
 
-    if (camera.paused) {
-        camera.play().then(() => {
-            window.requestAnimationFrame(repeat)
-        }).catch(console.log)
-    } else {
-        camera.pause()
-    }
+  if (camera.paused) {
+    camera.play().then(() => {
+      window.requestAnimationFrame(repeat)
+    }).catch(console.log)
+  } else {
+    camera.pause()
+  }
 })
 ```
 
