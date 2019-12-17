@@ -1,4 +1,4 @@
-> Web worker friendly pixel bending psychedelica
+> Web worker friendly pixel bending psychedelia
 
 ### Setup
 ```sh
