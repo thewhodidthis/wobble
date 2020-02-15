@@ -50,8 +50,8 @@ img {
 }
 
 canvas {
-  display: block;
   background: black url('screenshot.jpg') center/contain no-repeat;
+  display: block;
 }
 
 video {
