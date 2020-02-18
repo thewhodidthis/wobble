@@ -45,7 +45,7 @@ img {
 }
 
 canvas {
-  background-color: black;
+  background: black center/contain no-repeat;
   display: block;
 }
 

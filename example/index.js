@@ -14,6 +14,10 @@ const revert = () => {
   camera.setAttribute('src', 'clip.mp4')
   camera.setAttribute('preload', 'auto')
 
+  // Fallback poster
+  canvas.setAttribute('style', 'background-image: url(screenshot.jpg)')
+
+  // Remains hidden, just needs to be part of the DOM
   canvas.parentNode.insertBefore(camera, canvas)
 }
 
