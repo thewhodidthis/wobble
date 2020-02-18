@@ -1,19 +1,22 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="description" content="Helps produce slit-scan type visuals">
-    <title>wobble</title>
-    <link rel="icon" href="https://example.thewhodidthis.com/favicon.ico">
+    <title>wobble.js</title>
+    <link rel="icon" href="//example.thewhodidthis.com/favicon.ico">
     <link rel="preload" href="index.css" as="style">
     <link rel="stylesheet" href="index.css">
     <script src="index.js" defer></script>
+    <noscript>
+      <style>canvas { background: black url('screenshot.jpg') center/contain no-repeat }</style>
+    </noscript>
   </head>
   <body>
     <figure>
       <a href="#canvas" class="button">
         <canvas id="canvas" height="360" width="640">
-          <img src="screenshot.jpg" alt="Screenshot" height="360" width="640">
+          <img src="screenshot.jpg" alt="Black and white footage of girl campers dancing found on Pond5" height="360" width="640">
         </canvas>
       </a>
       <figcaption>

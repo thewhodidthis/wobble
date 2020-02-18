@@ -25,10 +25,6 @@ a:hover {
   text-decoration: underline;
 }
 
-small {
-  font-size: 0.75rem;
-}
-
 p {
   font-size: 0.875rem;
   margin: 0;
@@ -37,7 +33,6 @@ p {
 figure {
   margin: auto;
   max-width: 640px;
-  padding: 1.5rem 0 1rem;
 }
 
 figcaption {
@@ -50,7 +45,7 @@ img {
 }
 
 canvas {
-  background: black url('screenshot.jpg') center/contain no-repeat;
+  background-color: black;
   display: block;
 }
 
