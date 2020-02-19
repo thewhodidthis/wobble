@@ -1,43 +1,43 @@
 {
   "name": "@thewhodidthis/wobble",
   "version": "0.0.9",
+  "private": true,
   "description": "Slit scan thing",
-  "main": "index",
-  "module": "index.mjs",
-  "homepage": "https://github.com/thewhodidthis/wobble#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/thewhodidthis/wobble.git"
-  },
-  "bugs": {
-    "url": "https://github.com/thewhodidthis/wobble/issues"
-  },
-  "scripts": {
-    "pretest": "eslint test.js",
-    "test": "node test.js",
-    "prestart": "eslint index.mjs",
-    "start": "rollup -f cjs index.mjs > index.js",
-    "preexample": "eslint example/index.js",
-    "example": "rollup -f umd -n wobble index.mjs > example/wobble.js"
-  },
-  "eslintConfig": {
-    "extends": "@thewhodidthis"
-  },
-  "engines": {
-    "node": ">=6.11.0",
-    "npm": ">=3.10.10"
-  },
-  "devDependencies": {
-    "@thewhodidthis/eslint-config": "^0.0.11",
-    "eslint": "^6.8.0",
-    "rollup": "^1.31.1",
-    "tapeless": "^0.0.7"
-  },
   "keywords": [
     "pixels",
     "canvas"
   ],
-  "author": "sChzs BkgNns <sotirios.bakagiannis@gmail.com> (https://www.thewhodidthis.com)",
+  "homepage": "https://github.com/thewhodidthis/wobble#readme",
+  "bugs": {
+    "url": "https://github.com/thewhodidthis/wobble/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thewhodidthis/wobble.git"
+  },
   "license": "Unlicense",
-  "private": true
+  "author": "sChzs BkgNns <sotirios.bakagiannis@gmail.com> (https://www.thewhodidthis.com)",
+  "main": "index",
+  "module": "index.mjs",
+  "scripts": {
+    "preexample": "eslint example/index.js",
+    "example": "rollup -f umd -n wobble index.mjs > example/wobble.js",
+    "prestart": "eslint index.mjs",
+    "start": "rollup -f cjs index.mjs > index.js",
+    "pretest": "eslint test.js",
+    "test": "node test.js"
+  },
+  "eslintConfig": {
+    "extends": "@thewhodidthis"
+  },
+  "devDependencies": {
+    "@thewhodidthis/eslint-config": "^0.0.15",
+    "eslint": "^6.8.0",
+    "rollup": "^1.31.1",
+    "tapeless": "^0.0.7"
+  },
+  "engines": {
+    "node": ">=6.11.0",
+    "npm": ">=3.10.10"
+  }
 }
