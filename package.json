@@ -15,15 +15,18 @@
     "type": "git",
     "url": "git+https://github.com/thewhodidthis/wobble.git"
   },
-  "license": "Unlicense",
-  "author": "sChzs BkgNns <sotirios.bakagiannis@gmail.com> (https://www.thewhodidthis.com)",
+  "license": "ISC",
+  "author": "Sotiri Bakagiannis <sotirios.bakagiannis@gmail.com> (http://thewhodidthis.com)",
   "main": "index",
   "module": "index.mjs",
+  "directories": {
+    "example": "example"
+  },
   "scripts": {
     "preexample": "eslint example/index.js",
-    "example": "rollup -f umd -n wobble index.mjs > example/wobble.js",
+    "example": "rollup -f umd -n wobble -o example/wobble.js index.mjs",
     "prestart": "eslint index.mjs",
-    "start": "rollup -f cjs index.mjs > index.js",
+    "start": "rollup -f cjs -o index.js index.mjs",
     "pretest": "eslint test.js",
     "test": "node test.js"
   },
@@ -31,10 +34,10 @@
     "extends": "@thewhodidthis"
   },
   "devDependencies": {
-    "@thewhodidthis/eslint-config": "^0.0.15",
+    "@thewhodidthis/eslint-config": "^0.0.17",
     "eslint": "^6.8.0",
     "rollup": "^1.31.1",
-    "tapeless": "^0.0.7"
+    "tapeless": "^0.0.9"
   },
   "engines": {
     "node": ">=6.11.0",
