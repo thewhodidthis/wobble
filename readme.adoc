@@ -56,5 +56,5 @@ document.addEventListener('click', (e) => {
 ```
 
 ### Reading
-- [Informal Catalogue of Slit-Scan Video Artworks and Research](http://www.flong.com/texts/lists/slit_scan)
-- [Neil Jenkins' processing sketch](http://www.devoid.co.uk/processing/linearvideo_slitcamera1/index.htm)
+- http://www.flong.com/texts/lists/slit_scan[Informal Catalogue of Slit-Scan Video Artworks and Research]
+- http://www.devoid.co.uk/processing/linearvideo_slitcamera1/index.htm[Neil Jenkins' processing sketch]
