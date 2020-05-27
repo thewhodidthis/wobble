@@ -1,13 +1,19 @@
-> Web worker friendly pixel bending psychedelia
+## about
 
-### Setup
+Helps create Web Worker friendly pixel bending psychedelia.
+
+## setup
+
+Fetch latest from GitHub directly,
 
 ```sh
-# Fetch latest from github
+# Includes ESM and CJS versions
 npm i thewhodidthis/wobble
 ```
 
-### Usage
+## usage
+
+Link up to webcam feed for example,
 
 ```js
 import bender from '@thewhodidthis/wobble'
@@ -57,7 +63,7 @@ document.addEventListener('click', (e) => {
 })
 ```
 
-### Context
+## see also
 
-- http://www.flong.com/texts/lists/slit_scan[Informal Catalogue of Slit-Scan Video Artworks and Research]
-- http://www.devoid.co.uk/processing/linearvideo_slitcamera1/index.htm[Neil Jenkins' processing sketch]
+- [Informal Catalogue of Slit-Scan Video Artworks and Research](http://www.flong.com/texts/lists/slit_scan)
+- [Neil Jenkins' processing sketch](http://www.devoid.co.uk/processing/linearvideo_slitcamera1/index.htm)
