@@ -1,58 +1,39 @@
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.wobble = factory());
-}(this, (function () { 'use strict';
+var wobble = (() => {
+  var __defProp = Object.defineProperty;
+  var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
+  var __export = (target, all) => {
+    __markAsModule(target);
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
 
-  // # Wobble
-  // Slit scan thing
-
-  // Set up with number of strips (resolution),
-  // get a lambda for processing each data frame in return
-  const wobble = (depth = 40) => {
-    // For caching consecutive frames
+  // main.js
+  var main_exports = {};
+  __export(main_exports, {
+    default: () => main_default
+  });
+  var wobble = (depth = 40) => {
     const store = [];
-
-    // Accepts and returns an `ImageData` like object, of which
-    // `data` of type `Uint8ClampedArray` is the only required property
     return (input = { data: [] }) => {
-      // Wrap input just in case, this is the data view that
-      // gets processed in place
       const frame = new Uint8ClampedArray(input.data.buffer);
-
-      // Copy input data, save for later
       const clone = new Uint8ClampedArray(frame);
       const storeSizeMaybe = store.push(clone);
-
-      // Limit store size within resolution
       if (depth - storeSizeMaybe < 0) {
         store.shift();
       }
-
-      // Calculate range in pixels for each strip
       const storeSize = store.length;
       const frameSize = frame.length;
-
       const stripSize = Math.floor(frameSize / storeSize);
-
-      // Avoid using forEach, because speed matters in this case
       for (let i = 0; i < storeSize; i += 1) {
-        // Chunk start
         const a = i * stripSize;
-
-        // Chunk end
         const b = a + stripSize;
-
         const block = store[i];
         const strip = block.subarray(a, b);
-
         frame.set(strip, a);
       }
-
-      return input
-    }
+      return input;
+    };
   };
-
-  return wobble;
-
-})));
+  var main_default = wobble;
+  return main_exports;
+})();
