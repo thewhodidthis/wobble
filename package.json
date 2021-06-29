@@ -17,31 +17,22 @@
   },
   "license": "ISC",
   "author": "Sotiri Bakagiannis <sotirios.bakagiannis@gmail.com> (http://thewhodidthis.com)",
-  "main": "index",
-  "module": "index.mjs",
+  "type": "module",
+  "exports": "./main.js",
+  "main": "./main.js",
   "directories": {
     "example": "example"
   },
   "scripts": {
-    "preexample": "eslint example/index.js",
-    "example": "rollup -f umd -n wobble -o example/wobble.js index.mjs",
-    "prestart": "eslint index.mjs",
-    "start": "rollup -f cjs -o index.js index.mjs",
-    "pretest": "eslint test.js",
+    "start": "esbuild --bundle --global-name=wobble --outfile=example/wobble.js main.js",
     "test": "node test.js"
   },
-  "eslintConfig": {
-    "extends": "@thewhodidthis"
-  },
-  "dependencies": {},
   "devDependencies": {
-    "@thewhodidthis/eslint-config": "^0.0.17",
-    "eslint": "^6.8.0",
-    "rollup": "^1.31.1",
-    "tapeless": "^0.0.9"
+    "esbuild": "^0.12.12",
+    "tapeless": "^2.0.1"
   },
   "engines": {
-    "node": ">=6.11.0",
-    "npm": ">=3.10.10"
+    "node": ">=14.17.0",
+    "npm": ">=6.14.13"
   }
 }
