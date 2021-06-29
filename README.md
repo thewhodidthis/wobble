@@ -4,10 +4,10 @@ Helps create Web Worker friendly pixel bending psychedelia.
 
 ## setup
 
-Fetch latest from GitHub directly:
+Download from GitHub directly:
 
 ```sh
-# Includes ESM and CJS versions
+# Add to package.json
 npm install thewhodidthis/wobble
 ```
 
