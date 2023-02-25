@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Helps produce slit-scan type visuals.">
+    <title>wobble.js</title>
+    <script src="example.js" defer></script>
+    <style>
+      @keyframes hide {
+        to {
+          visibility: hidden;
+        }
+      }
+      html {
+        font: medium/normal sans-serif;
+        height: 100%;
+      }
+      body {
+        display: grid;
+        margin: 0;
+        min-height: 100%;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      p {
+        text-align: center;
+      }
+      figcaption {
+        font-size: small;
+      }
+      figure {
+        margin: auto;
+        max-width: 40rem;
+      }
+      canvas,
+      img {
+        object-fit: cover;
+        vertical-align: middle;
+        width: 100%;
+      }
+      canvas {
+        background: black center/cover no-repeat;
+      }
+      .button {
+        display: block;
+        font-size: max(min(2.25vw, 1rem), 0.5625rem);
+        position: relative;
+      }
+      .button::before,
+      .button::after {
+        box-sizing: border-box;
+        content: "";
+        display: block;
+        height: 0;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 0;
+      }
+      .button::before {
+        border: 1.5em solid transparent;
+        border-left-color: rgba(255, 255, 255, 0.7);
+        border-left-width: 2.5em;
+        margin-left: 0.75em;
+      }
+      .button::after {
+        border: 0;
+      }
+      .button:hover {
+        text-decoration: none;
+      }
+      .button.pause::before,
+      .button.pause::after {
+        background: rgba(255, 255, 255, 0.7);
+        border: 0;
+      }
+      .button.pause::before {
+        margin-left: -0.75em;
+      }
+      .button.pause::after {
+        margin-left: 0.75em;
+      }
+      .button.pause:hover::before,
+      .button.pause:hover::after {
+        animation: hide 0s 1s forwards;
+        height: 3em;
+        visibility: visible;
+        width: 1em;
+      }
+      @media all and (max-width: 640px) and (max-height: 360px) {
+        figcaption {
+          display: none;
+        }
+      }
+    </style>
+    <noscript>
+      <style>
+        canvas {
+          background-image: url(screenshot.png);
+        }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <figure>
+      <a href="#canvas" class="button">
+        <canvas id="canvas" height="360" width="640">
+          <img src="screenshot.jpg" alt="Black and white footage of girl campers dancing" height="360" width="640">
+        </canvas>
+      </a>
+      <figcaption>
+        <p><strong><a href="https://github.com/thewhodidthis/wobble">wobble.js</a></strong> Slit scan thing</p>
+      </figcaption>
+    </figure>
+  </body>
+</html>
