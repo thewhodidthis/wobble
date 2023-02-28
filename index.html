@@ -30,21 +30,25 @@
       p {
         text-align: center;
       }
-      figcaption {
-        font-size: small;
+      canvas {
+        background: black url(screenshot.jpg) center/cover no-repeat;
+        display: block;
       }
-      figure {
-        margin: auto;
-        max-width: 40rem;
+      img {
+        height: auto;
+        vertical-align: middle;
       }
       canvas,
       img {
         object-fit: cover;
-        vertical-align: middle;
-        width: 100%;
+        max-width: 100%;
       }
-      canvas {
-        background: black center/cover no-repeat;
+      figcaption {
+        margin: 0 2.25rem 0 0.75rem;
+      }
+      figure {
+        font-size: small;
+        margin: auto;
       }
       .button {
         display: block;
@@ -99,13 +103,6 @@
         }
       }
     </style>
-    <noscript>
-      <style>
-        canvas {
-          background-image: url(screenshot.png);
-        }
-      </style>
-    </noscript>
   </head>
   <body>
     <figure>
