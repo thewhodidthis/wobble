@@ -17,20 +17,21 @@ const revert = () => {
   canvas.setAttribute("style", "background-image: url(screenshot.jpg)")
 }
 
+const { width: w, height: h } = canvas
+const screen = { x: 0, y: 0, w, h }
+
 if (window === window.top && navigator.mediaDevices) {
   navigator.mediaDevices.getUserMedia({
-    video: { width: 640 },
+    video: { width: w, aspectRatio: self.orientation === 0 ? h / w : w / h },
     audio: false,
   }).then((stream) => {
     camera.srcObject = stream
+
     button.click()
   }).catch(revert)
 } else {
   revert()
 }
-
-const { width: w, height: h } = canvas
-const screen = { x: 0, y: 0, w, h }
 
 // Extract dimensions.
 camera.addEventListener("loadeddata", ({ target }) => {
