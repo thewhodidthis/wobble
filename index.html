@@ -97,6 +97,15 @@
         visibility: visible;
         width: 1em;
       }
+      @media (prefers-color-scheme: dark) {
+        html {
+          background: #1e1e1e;
+          color: #efefef;
+        }
+        a {
+          color: inherit;
+        }
+      }
       @media all and (max-width: 640px) and (max-height: 360px) {
         figcaption {
           display: none;
